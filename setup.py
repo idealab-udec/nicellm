@@ -16,9 +16,8 @@ setuptools.setup(
     url="https://github.com/cnavarreteliz/nicellm",
     packages=setuptools.find_packages(),
     install_requires=[
-        "PIL",
-        "base64",
-        "dotenv",
+        "Pillow",
+        "python-dotenv",
         "google.generativeai",
         "openai",
     ],
