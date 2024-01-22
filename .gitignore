@@ -1,2 +1,4 @@
 .env
+build/
+nicellm.egg-info/
 nicellm/__pycache__
