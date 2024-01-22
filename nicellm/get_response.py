@@ -7,8 +7,6 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 from openai import OpenAI
 
-
-
 load_dotenv()
 
 if os.getenv("APIKEY_GOOGLE"):
@@ -30,20 +28,22 @@ def get_response(
     image_path=None,
     **kwargs
 ) -> str:
-    """Gets the response from a Large Language Model (LLM) using an API. The most common config parameters are defined in this function. However, users can set all parameters defined by the official API documentation of OpenAI and Google Generative AI through `kwargs` parameter.
+    """Gets the response from a text- or image-based model. This function also includes the most common config parameters. However, users can set up all parameters defined by the official API documentation of OpenAI and Google Generative AI through `kwargs` parameter.
 
     Parameters
     ----------
     model_id : str
-        The model identifier. OpenAI: https://platform.openai.com/docs/models/overview
+        The model identifier. They can be displayed using `llm.list_models()` function.
     prompt : str
-        A prompt provided by the user
-    temperature : float
-        The creativity of responses. Defaults to 0. Values range from 0 to 1 for Gemini-Pro and from 0 to 2 for OpenAI.
+        A prompt provided by the user.
+    role : str
+        A prompt to designate a specific role to the model.
+    temperature : float, by default 0.
+        The creativity of responses. Values range from 0 to 1 for Google models and from 0 to 2 for OpenAI models.
     image_path : str
         The local location of the image. Format accepted are .png and .jpeg.
     kwargs : dict
-        Other parameters are passed through to the API functions
+        Other parameters are passed through to the API functions.
 
     Returns
     -------
