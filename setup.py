@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="nicellm",
-    version="0.0.1",
+    version="0.0.2",
     author="cnavarreteliz",
     author_email="cnavarreteliz@gmail.com",
     description="NiceLLM is a wrangler of API connections of Large Language Models (LLMs) in Python.",

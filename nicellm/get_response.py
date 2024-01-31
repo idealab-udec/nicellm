@@ -1,6 +1,7 @@
 import base64
 import PIL
 import os
+import requests
 os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
 
 from dotenv import load_dotenv
@@ -14,6 +15,14 @@ if os.getenv("APIKEY_GOOGLE"):
 
 if os.getenv("APIKEY_OPENAI"):
     client = OpenAI(api_key=os.getenv("APIKEY_OPENAI"))
+
+if os.getenv("APIKEY_MISTRAL"):
+    APIKEY_MISTRAL = os.getenv("APIKEY_MISTRAL")
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer " + APIKEY_MISTRAL 
+    }
 
 # Function to encode the image
 def encode_image(image_path):
@@ -100,7 +109,23 @@ def get_response(
         )
         
         return completion.text
+    
+    elif model_id in list_models(owner="mistralai"):
+        url = "https://api.mistral.ai/v1/chat/completions"
 
+        data = {
+            "model": model_id,
+            "messages": [
+                {"role": "system", "content": role},
+                {"role": "user", "content": prompt}
+            ],
+            "temperature": temperature,
+            **kwargs
+        }
+
+        response = requests.post(url, headers=headers, json=data)
+
+        return response.json()["choices"][0]["message"]["content"]
 
     return "Model not found"
 
@@ -124,3 +149,6 @@ def list_models(
         return [m.id for m in client.models.list()]
     elif owner == "google":
         return [m.name.split("/")[1] for m in genai.list_models()]
+    elif owner == "mistralai":
+        r = requests.get("https://api.mistral.ai/v1/models", headers=headers)
+        return [m["id"] for m in r.json()["data"]]

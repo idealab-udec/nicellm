@@ -2,7 +2,7 @@
 
 ## About
 
-NiceLLM is a Python package that homologates mainstream library functions of Large Language Models (LLMs), such as OpenAI and Google Generative AI, into a unique and simple interface for the user.
+NiceLLM is a Python package that homologates mainstream library functions of Large Language Models (LLMs), such as OpenAI, MistralAI, and Google Generative AI, into a unique and simple interface for the user.
 
 ## Main Features
 
@@ -24,11 +24,16 @@ To initialize the functions of `nicellm`, you will need to set some environment 
 ```
 APIKEY_GOOGLE="YOUR-API-KEY-FROM-GENERATIVE-AI"
 APIKEY_OPENAI="YOUR-API-KEY-FROM-OPEN-AI"
+APIKEY_MISTRAL="YOUR-API-KEY-FROM-MISTRAL"
 ```
 
-It is not mandatory to set up both variables. However, you must set up at least the one corresponding to the models you want to use.
+It is not mandatory to set up all env variables. However, you must set up at least the ones corresponding to the models you want to use.
 
-Then, executing `. .env` to make sure that those variables are config.
+To obtain your API keys, please visit:
+
+- OpenAI: https://platform.openai.com/account/api-keys
+- Google Generative AI: https://makersuite.google.com/app/apikey
+- Mistral AI: https://console.mistral.ai/user/api-keys/
 
 ## Usage
 
@@ -48,6 +53,15 @@ The same question can be easily replicated using `gemini-pro`:
 ```
 llm.get_response(
     model_id="gemini-pro",
+    prompt="Who is the best LLM in the world?"
+)
+```
+
+By using `mistral-tiny`:
+
+```
+llm.get_response(
+    model_id="mistral-tiny",
     prompt="Who is the best LLM in the world?"
 )
 ```
